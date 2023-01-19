@@ -60,15 +60,28 @@ class Room:
         if argument in self.timers:
             value = self.timers[argument]
             if argument:
-                return ('existiert', argument, value, sender_firstname)
+                return ('existiert', argument, format_seconds(value), sender_firstname)
             else:
-                return ('existiert_anonym', value, sender_firstname)
+                return ('existiert_anonym', format_seconds(value), sender_firstname)
 
         self.timers[argument] = 0
         if argument:
             return ('neu', argument, sender_firstname)
         else:
             return ('neu_anonym', sender_firstname)
+
+    def command_zeige(self, argument, sender_firstname, sender_username):
+        value = self.timers.get(argument, None)
+        if value is None:
+            if argument:
+                return ('zeige_missing', argument, sender_firstname)
+            else:
+                return ('zeige_missing_anonym', sender_firstname)
+
+        if argument:
+            return ('zeige', argument, format_seconds(value), sender_firstname)
+        else:
+            return ('zeige_anonym', format_seconds(value), sender_firstname)
 
 
 def compute_uptime(room, argument, sender_firstname, sender_username) -> None:
@@ -80,5 +93,7 @@ def handle(room, command, argument, sender_firstname, sender_username):
         return compute_uptime(room, argument, sender_firstname, sender_username)
     elif command == 'neu':
         return room.command_neu(argument, sender_firstname, sender_username)
+    elif command == 'zeige':
+        return room.command_zeige(argument, sender_firstname, sender_username)
     else:
         return ('unknown_command', sender_firstname)

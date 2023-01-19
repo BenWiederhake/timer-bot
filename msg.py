@@ -19,6 +19,22 @@ MESSAGES = {
         'Den Default-Timer gibt es bereits, da sind noch {0} drauf, {1}.',
         'Sorry {1}, das geht nicht. Den Default-Timer gibt es bereits, übrigens mit {0} verbleibend.',
     ],
+    'zeige_missing': [
+        'Der Timer "{0}" existiert nicht. Meintest du vielleicht "/neu {0}", {1}?',
+    ],
+    'zeige_missing_anonym': [
+        'Der Default-Timer existiert nicht. Meintest du vielleicht "/neu", {0}?',
+    ],
+    'zeige': [
+        'Der Timer "{0}" steht bei {1}, {2}.',
+        'Im Moment hat der Timer "{0}" {1}, {2}.',
+        'Klar, {2}: Es sind {1} auf dem Timer "{0}".',
+    ],
+    'zeige_anonym': [
+        'Der Default-Timer steht bei {0}, {1}.',
+        'Im Moment hat der Default-Timer {0}, {1}.',
+        'Klar, {1}: Es sind {0} auf dem Default-Timer.',
+    ],
     'uptime': [
         'Der Bot war hier das erste Mal {0} aktiv. Jetzt ist es {1}.',
     ],

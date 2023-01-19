@@ -84,9 +84,27 @@ class TestSequences(unittest.TestCase):
         self.check_sequence([
             (('neu', '', 'fina', 'usna'), ('neu_anonym', 'fina')),
             (('neu', 'foobar', 'fina', 'usna'), ('neu', 'foobar', 'fina')),
-            (('neu', '', 'fina', 'usna'), ('existiert_anonym', 0, 'fina')),
-            (('neu', 'foobar', 'fina', 'usna'), ('existiert', 'foobar', 0, 'fina')),
+            (('neu', '', 'fina', 'usna'), ('existiert_anonym', '0s', 'fina')),
+            (('neu', 'foobar', 'fina', 'usna'), ('existiert', 'foobar', '0s', 'fina')),
             (('neu', 'quux', 'fina', 'usna'), ('neu', 'quux', 'fina')),
+        ])
+
+    def test_zeige_anonym(self):
+        self.check_sequence([
+            (('zeige', '', 'fina', 'usna'), ('zeige_missing_anonym', 'fina')),
+            (('neu', '', 'fina', 'usna'), ('neu_anonym', 'fina')),
+            (('zeige', '', 'fina', 'usna'), ('zeige_anonym', '0s', 'fina')),
+            # TODO: Add some time, then output again
+        ])
+
+    def test_zeige_specific(self):
+        self.check_sequence([
+            (('zeige', 'foo', 'fina', 'usna'), ('zeige_missing', 'foo', 'fina')),
+            (('neu', 'bar', 'fina', 'usna'), ('neu', 'bar', 'fina')),
+            (('zeige', 'foo', 'fina', 'usna'), ('zeige_missing', 'foo', 'fina')),
+            (('neu', 'foo', 'fina', 'usna'), ('neu', 'foo', 'fina')),
+            (('zeige', 'foo', 'fina', 'usna'), ('zeige', 'foo', '0s', 'fina')),
+            # TODO: Add some time, then output again
         ])
 
 

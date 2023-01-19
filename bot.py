@@ -186,6 +186,8 @@ def run():
     application.add_handler(CommandHandler("start", cmd_start))
 
     # application.add_handler(CommandHandler("example", cmd_for('example')))
+    application.add_handler(CommandHandler("neu", cmd_for('neu')))
+    application.add_handler(CommandHandler("zeige", cmd_for('zeige')))
     application.add_handler(CommandHandler("uptime", cmd_for('uptime')))
     application.add_handler(CommandHandler("unknown_command", cmd_for('unknown_command')))  # By popular opinion
 
