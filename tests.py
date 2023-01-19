@@ -42,9 +42,34 @@ class TestFormatSeconds(unittest.TestCase):
             (90120, "1d 1h 2min"),
             (604800, "7d 0h 0min"),
         ]
+        for i, (int_value, str_value) in enumerate(test_data):
+            with self.subTest(entry_number=i, value=int_value, type="format"):
+                actual = logic.format_seconds(int_value)
+                self.assertEqual(actual, str_value)
+            with self.subTest(entry_number=i, value=str_value, type="parse"):
+                actual = logic.parse_seconds(str_value.replace(" ", ""))
+                self.assertEqual(actual, int_value)
+
+    def test_parse_special(self):
+        test_data = [
+            ("0m0s", 0),
+            ("1234s", 1234),
+            ("90m", 5400),
+            ("90min", 5400),
+            ("1h30m", 5400),
+            ("1h30min", 5400),
+            ("0h", 0),
+            ("1h", 3600),
+            ("1h0s", 3600),
+            ("-1s", None),
+            ("1", None),
+            ("+90", None),
+            ("+90s", None),
+            ("1h 30m", None),
+        ]
         for i, (value, expected) in enumerate(test_data):
             with self.subTest(entry_number=i, value=value):
-                actual = logic.format_seconds(value)
+                actual = logic.parse_seconds(value)
                 self.assertEqual(actual, expected)
 
 

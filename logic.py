@@ -2,8 +2,10 @@
 # Not for execution
 
 import datetime
+import re
 
 DATETIME_FORMAT = '%Y-%m-%d %T'
+SECONDS_PARSE_RE = re.compile('^(?:([0-9]+)d)?(?:([0-9]+)h)?(?:([0-9]+)m(?:in)?)?(?:([0-9]+)s)?$')
 
 
 def format_seconds(value):
@@ -34,6 +36,20 @@ def format_seconds(value):
         parts.append(f"{secs_bare}s")
 
     return " ".join(parts)
+
+
+def parse_seconds(argument):
+    if not argument:
+        return None  # Technically valid, but refuse it anyway.
+    match = SECONDS_PARSE_RE.match(argument)
+    if not match:
+        return None
+    g_d, g_h, g_m, g_s = match.groups()
+    d = int(g_d) if g_d else 0
+    h = int(g_h) if g_h else 0
+    m = int(g_m) if g_m else 0
+    s = int(g_s) if g_s else 0
+    return ((d * 24 + h) * 60 + m) * 60 + s
 
 
 class Room:
