@@ -3,6 +3,9 @@
 import secret
 
 MESSAGES = {
+    'uptime': [
+        'Der Bot war hier das erste Mal {0} aktiv. Jetzt ist es {1}.',
+    ],
     'unknown_command': [
         'Häh?',
         'Was?',
