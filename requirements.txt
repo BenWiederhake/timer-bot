@@ -1,0 +1,2 @@
+atomicwrites>=1.4.1
+python-telegram-bot>=20.0 

@@ -1,0 +1,5 @@
+__pycache__/
+secret.py
+timerbot_data.json
+.venv/
+timerbot_*.log
