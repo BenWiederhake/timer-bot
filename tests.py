@@ -197,6 +197,53 @@ class TestSequences(unittest.TestCase):
             (('plus', '1h1h', 'fina', 'usna'), ('modify_invalid_onearg', '1h1h', 'fina')),
         ])
 
+    def test_minus_anonym(self):
+        self.check_sequence([
+            (('minus', '', 'fina', 'usna'), ('modify_noarg', 'fina')),
+            (('minus', '1h', 'fina', 'usna'), ('modify_missing_anonym', 'fina')),
+            (('neu', '', 'fina', 'usna'), ('neu_anonym', 'fina')),
+            (('minus', '1h', 'fina', 'usna'), ('minus_anonym', '1h 0min', '0s', 'fina')),
+            (('plus', '10h', 'fina', 'usna'), ('plus_anonym', '10h 0min', '10h 0min', 'fina')),
+            (('minus', '1h', 'fina', 'usna'), ('minus_anonym', '1h 0min', '9h 0min', 'fina')),
+            (('minus', '3600s', 'fina', 'usna'), ('minus_anonym', '1h 0min', '8h 0min', 'fina')),
+            (('minus', '59m60s', 'fina', 'usna'), ('minus_anonym', '1h 0min', '7h 0min', 'fina')),
+        ])
+
+    def test_minus_specific(self):
+        self.check_sequence([
+            (('minus', 'x', 'fina', 'usna'), ('modify_invalid_onearg', 'x', 'fina')),
+            (('neu', 'x', 'fina', 'usna'), ('neu', 'x', 'fina')),
+            (('minus', 'x 1h', 'fina', 'usna'), ('minus', 'x', '1h 0min', '0s', 'fina')),
+            (('plus', 'x 10h', 'fina', 'usna'), ('plus', 'x', '10h 0min', '10h 0min', 'fina')),
+            (('minus', 'x 1h', 'fina', 'usna'), ('minus', 'x', '1h 0min', '9h 0min', 'fina')),
+            (('minus', 'x 3600s', 'fina', 'usna'), ('minus', 'x', '1h 0min', '8h 0min', 'fina')),
+            (('minus', 'x 59m60s', 'fina', 'usna'), ('minus', 'x', '1h 0min', '7h 0min', 'fina')),
+        ])
+
+    def test_minus_invalid(self):
+        self.check_sequence([
+            (('neu', 'x', 'fina', 'usna'), ('neu', 'x', 'fina')),
+            (('minus', 'x y', 'fina', 'usna'), ('modify_invalid_twoarg', 'y', 'fina')),
+            (('minus', 'x 1h', 'fina', 'usna'), ('minus', 'x', '1h 0min', '0s', 'fina')),
+            (('minus', 'x 1h1h', 'fina', 'usna'), ('modify_invalid_twoarg', '1h1h', 'fina')),
+        ])
+
+    def test_minus_invalid_anonym(self):
+        self.check_sequence([
+            (('neu', '', 'fina', 'usna'), ('neu_anonym', 'fina')),
+            (('minus', 'y', 'fina', 'usna'), ('modify_invalid_onearg', 'y', 'fina')),
+            (('minus', '1h', 'fina', 'usna'), ('minus_anonym', '1h 0min', '0s', 'fina')),
+            (('minus', '1h1h', 'fina', 'usna'), ('modify_invalid_onearg', '1h1h', 'fina')),
+        ])
+
+    def test_minus_fractional(self):
+        self.check_sequence([
+            (('neu', '', 'fina', 'usna'), ('neu_anonym', 'fina')),
+            (('plus', '37m', 'fina', 'usna'), ('plus_anonym', '37min', '37min', 'fina')),
+            (('minus', '18min', 'fina', 'usna'), ('minus_anonym', '18min', '19min', 'fina')),
+            (('minus', '22min', 'fina', 'usna'), ('minus_anonym', '22min', '0s', 'fina')),
+        ])
+
     def test_help(self):
         self.check_sequence([
             (('help', '', 'fina', 'usna'), ('help', 'fina')),
