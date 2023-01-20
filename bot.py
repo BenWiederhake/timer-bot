@@ -143,8 +143,18 @@ async def cmd_denyall(update: Update, _context: CallbackContext) -> None:
 async def cmd_start(update: Update, _context: CallbackContext) -> None:
     await update.effective_message.reply_text(
         f'Hi {update.effective_user.first_name}!'
-        f'\n(Text noch nicht geschrieben)'
+        f'\n/neu [TIMERNAME] – Legt einen neuen Timer an. Wenn TIMERNAME weggelassen wird, dann legt es den Default-Timer an.'
+        f'\n/plus [TIMERNAME] ZEIT – Fügt ZEIT dem Default-Timer oder dem TIMERNAME hinzu.'
+        f'\n/minus [TIMERNAME] ZEIT – Nimmt ZEIT vom Default-Timer runter, oder vom TIMERNAME.'
+        f'\n/help – Erklärt wie die Zeit-Angaben funktionieren.'
+        f'\n/zeige TIMERNAME – Zeigt wieviel Zeit auf dem TIMERNAME noch verbleibt.'
+        f'\n/list – Listet alle Timer auf.'
         f'\nhttps://github.com/BenWiederhake/timer-bot'
+        # For botfather:
+        # plus_viertel - Default-Timer +15 Minuten
+        # plus_stunde - Default-Timer +60 Minuten
+        # plus_tag - Default-Timer +24 Stunden
+        # list - Alle Timer auflisten
     )
 
 
@@ -178,6 +188,7 @@ def run():
 
     application.add_handler(CommandHandler("admin", cmd_admin))
     application.add_handler(CommandHandler("show_state", cmd_show_state))
+    application.add_handler(CommandHandler("dump_state", cmd_show_state))
     application.add_handler(CommandHandler("resetall", cmd_resetall))
     application.add_handler(CommandHandler("resethere", cmd_resethere))
     application.add_handler(CommandHandler("permit", cmd_permit))
@@ -186,7 +197,10 @@ def run():
     application.add_handler(CommandHandler("start", cmd_start))
 
     # application.add_handler(CommandHandler("example", cmd_for('example')))
+    application.add_handler(CommandHandler("help", cmd_for('help')))
     application.add_handler(CommandHandler("neu", cmd_for('neu')))
+    application.add_handler(CommandHandler("plus", cmd_for('plus')))
+    application.add_handler(CommandHandler("minus", cmd_for('minus')))
     application.add_handler(CommandHandler("zeige", cmd_for('zeige')))
     application.add_handler(CommandHandler("uptime", cmd_for('uptime')))
     application.add_handler(CommandHandler("unknown_command", cmd_for('unknown_command')))  # By popular opinion
