@@ -202,6 +202,9 @@ def run():
     application.add_handler(CommandHandler("minus", cmd_for('minus')))
     application.add_handler(CommandHandler("zeige", cmd_for('zeige')))
     application.add_handler(CommandHandler("list", cmd_for('list')))
+    application.add_handler(CommandHandler("plus_viertel", cmd_for('plus_viertel')))
+    application.add_handler(CommandHandler("plus_stunde", cmd_for('plus_stunde')))
+    application.add_handler(CommandHandler("plus_tag", cmd_for('plus_tag')))
     application.add_handler(CommandHandler("uptime", cmd_for('uptime')))
     application.add_handler(CommandHandler("unknown_command", cmd_for('unknown_command')))  # By popular opinion
 

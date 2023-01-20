@@ -45,6 +45,9 @@ MESSAGES = {
         'Sorry {0}, aber da der Default-Timer nicht existiert geht das schlecht. Mach mal /neu, dann geht das.',
         'Sorry {0}, aber es gibt keinen Default-Timer, also kann ich ihn nicht verändern. Mit /neu kannst du ihn anlegen, mit /help erkläre ich nochmal das Zeit-Format.',
     ],
+    'modify_missing': [
+        'Sorry {0}, aber den Timer {1} gibt es noch nicht. Mach mal /neu {1} vielleicht, oder schau dir /help an?',
+    ],
     'plus_anonym': [
         'Natürlich {2}, Default-Timer um {0} erhöht. Er steht jetzt auf {1}.',
         'Default-Timer um {0} erhöht, und steht jetzt auf {1}.',

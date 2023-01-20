@@ -183,6 +183,7 @@ class TestSequences(unittest.TestCase):
 
     def test_plus_invalid(self):
         self.check_sequence([
+            (('plus', 'x 1h', 'fina', 'usna'), ('modify_missing', 'x', 'fina')),
             (('neu', 'x', 'fina', 'usna'), ('neu', 'x', 'fina')),
             (('plus', 'x y', 'fina', 'usna'), ('modify_invalid_twoarg', 'y', 'fina')),
             (('plus', 'x 1h', 'fina', 'usna'), ('plus', 'x', '1h 0min', '1h 0min', 'fina')),
@@ -222,6 +223,7 @@ class TestSequences(unittest.TestCase):
 
     def test_minus_invalid(self):
         self.check_sequence([
+            (('minus', 'x 1h', 'fina', 'usna'), ('modify_missing', 'x', 'fina')),
             (('neu', 'x', 'fina', 'usna'), ('neu', 'x', 'fina')),
             (('minus', 'x y', 'fina', 'usna'), ('modify_invalid_twoarg', 'y', 'fina')),
             (('minus', 'x 1h', 'fina', 'usna'), ('minus', 'x', '1h 0min', '0s', 'fina')),
@@ -260,6 +262,28 @@ class TestSequences(unittest.TestCase):
             (("list", "", "fina", "usna"), ("list", "Default-Timer: 0s\nx: 0s\ny: 0s", "fina")),
             (("neu", "v", "fina", "usna"), ("neu", "v", "fina")),
             (("list", "", "fina", "usna"), ("list", "Default-Timer: 0s\nv: 0s\nx: 0s\ny: 0s", "fina")),
+        ])
+
+    def test_shorthand_anonym(self):
+        self.check_sequence([
+            (("plus_viertel", "", "fina", "usna"), ("modify_missing_anonym", "fina")),
+            (("plus_stunde", "", "fina", "usna"), ("modify_missing_anonym", "fina")),
+            (("plus_tag", "", "fina", "usna"), ("modify_missing_anonym", "fina")),
+            (("neu", "", "fina", "usna"), ("neu_anonym", "fina")),
+            (("plus_viertel", "", "fina", "usna"), ("plus_anonym", "15min", "15min", "fina")),
+            (("plus_stunde", "", "fina", "usna"), ("plus_anonym", "1h 0min", "1h 15min", "fina")),
+            (("plus_tag", "", "fina", "usna"), ("plus_anonym", "1d 0h 0min", "1d 1h 15min", "fina")),
+        ])
+
+    def test_shorthand_specific(self):
+        self.check_sequence([
+            (("plus_viertel", "x", "fina", "usna"), ("modify_missing", "x", "fina")),
+            (("plus_stunde", "x", "fina", "usna"), ("modify_missing", "x", "fina")),
+            (("plus_tag", "x", "fina", "usna"), ("modify_missing", "x", "fina")),
+            (("neu", "x", "fina", "usna"), ("neu", "x", "fina")),
+            (("plus_viertel", "x", "fina", "usna"), ("plus", "x", "15min", "15min", "fina")),
+            (("plus_stunde", "x", "fina", "usna"), ("plus", "x", "1h 0min", "1h 15min", "fina")),
+            (("plus_tag", "x", "fina", "usna"), ("plus", "x", "1d 0h 0min", "1d 1h 15min", "fina")),
         ])
 
 

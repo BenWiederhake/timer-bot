@@ -172,5 +172,17 @@ def handle(room, command, argument, sender_firstname, sender_username):
         return room.modify_by(-1, argument, sender_firstname, sender_username)
     elif command == 'help':
         return ('help', sender_firstname)
+    elif command == 'plus_viertel':
+        amount = "15min"
+        padded = f"{argument} {amount}" if argument else amount
+        return room.modify_by(1, padded, sender_firstname, sender_username)
+    elif command == 'plus_stunde':
+        amount = "1h"
+        padded = f"{argument} {amount}" if argument else amount
+        return room.modify_by(1, padded, sender_firstname, sender_username)
+    elif command == 'plus_tag':
+        amount = "1d"
+        padded = f"{argument} {amount}" if argument else amount
+        return room.modify_by(1, padded, sender_firstname, sender_username)
     else:
         return ('unknown_command', sender_firstname)
