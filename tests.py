@@ -74,14 +74,12 @@ class TestFormatSeconds(unittest.TestCase):
 
 
 class TestSequences(unittest.TestCase):
-    SKIP_MESSAGES = {"uptime"}
     SEEN_MESSAGES = set()
 
     @classmethod
     def tearDownClass(_cls):
         expected_keys = set(msg.MESSAGES.keys())
         extraneous_keys = expected_keys.difference(TestSequences.SEEN_MESSAGES)
-        extraneous_keys.difference_update(TestSequences.SKIP_MESSAGES)
         assert not extraneous_keys, extraneous_keys
 
     def check_sequence(self, sequence):
@@ -110,6 +108,25 @@ class TestSequences(unittest.TestCase):
         self.check_sequence([
             (('asdf', '', 'fina', 'usna'), ('unknown_command', 'fina')),
         ])
+
+    def test_uptime(self):
+        # Returned text depends on the current time.
+        room = logic.Room()
+        TestSequences.SEEN_MESSAGES.add("uptime")
+        actual_response = logic.handle(room, "uptime", "", "fina", "usna")
+        self.assertEqual(3, len(actual_response), actual_response)
+        self.assertEqual("uptime", actual_response[0], actual_response)
+        self.assertEqual(19, len(actual_response[1]), actual_response)
+        self.assertEqual(19, len(actual_response[2]), actual_response)
+        template_list = msg.MESSAGES["uptime"]
+        self.assertTrue(template_list)
+        # Check that all templates all work:
+        for template in template_list:
+            self.assertTrue(template.format(*actual_response[1:]), (template, actual_response))
+        d = room.to_dict()
+        room2 = logic.Room.from_dict(d)
+        d2 = room2.to_dict()
+        self.assertEqual(d, d2)
 
     def test_unknown_command(self):
         self.check_sequence([
