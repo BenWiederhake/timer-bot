@@ -132,6 +132,43 @@ class TestSequences(unittest.TestCase):
             # TODO: Add some time, then output again
         ])
 
+    def test_plus_anonym(self):
+        self.check_sequence([
+            (('plus', '', 'fina', 'usna'), ('modify_noarg', 'fina')),
+            (('plus', '1h', 'fina', 'usna'), ('modify_missing_anonym', 'fina')),
+            (('neu', '', 'fina', 'usna'), ('neu_anonym', 'fina')),
+            (('plus', '1h', 'fina', 'usna'), ('plus_anonym', '1h 0min', '1h 0min', 'fina')),
+            (('plus', '1h', 'fina', 'usna'), ('plus_anonym', '1h 0min', '2h 0min', 'fina')),
+            (('plus', '3600s', 'fina', 'usna'), ('plus_anonym', '1h 0min', '3h 0min', 'fina')),
+            (('plus', '59m60s', 'fina', 'usna'), ('plus_anonym', '1h 0min', '4h 0min', 'fina')),
+        ])
+
+    def test_plus_specific(self):
+        self.check_sequence([
+            (('plus', 'x', 'fina', 'usna'), ('modify_invalid_onearg', 'x', 'fina')),
+            (('neu', 'x', 'fina', 'usna'), ('neu', 'x', 'fina')),
+            (('plus', 'x 1h', 'fina', 'usna'), ('plus', 'x', '1h 0min', '1h 0min', 'fina')),
+            (('plus', 'x 1h', 'fina', 'usna'), ('plus', 'x', '1h 0min', '2h 0min', 'fina')),
+            (('plus', 'x 3600s', 'fina', 'usna'), ('plus', 'x', '1h 0min', '3h 0min', 'fina')),
+            (('plus', 'x 59m60s', 'fina', 'usna'), ('plus', 'x', '1h 0min', '4h 0min', 'fina')),
+        ])
+
+    def test_plus_invalid(self):
+        self.check_sequence([
+            (('neu', 'x', 'fina', 'usna'), ('neu', 'x', 'fina')),
+            (('plus', 'x y', 'fina', 'usna'), ('modify_invalid_twoarg', 'y', 'fina')),
+            (('plus', 'x 1h', 'fina', 'usna'), ('plus', 'x', '1h 0min', '1h 0min', 'fina')),
+            (('plus', 'x 1h1h', 'fina', 'usna'), ('modify_invalid_twoarg', '1h1h', 'fina')),
+        ])
+
+    def test_plus_invalid_anonym(self):
+        self.check_sequence([
+            (('neu', '', 'fina', 'usna'), ('neu_anonym', 'fina')),
+            (('plus', 'y', 'fina', 'usna'), ('modify_invalid_onearg', 'y', 'fina')),
+            (('plus', '1h', 'fina', 'usna'), ('plus_anonym', '1h 0min', '1h 0min', 'fina')),
+            (('plus', '1h1h', 'fina', 'usna'), ('modify_invalid_onearg', '1h1h', 'fina')),
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

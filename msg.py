@@ -35,6 +35,42 @@ MESSAGES = {
         'Im Moment hat der Default-Timer {0}, {1}.',
         'Klar, {1}: Es sind {0} auf dem Default-Timer.',
     ],
+    'modify_noarg': [
+        'Sorry {0}, leider musst du das eintippen, mit Argument wie viel es sein soll. /help erklärt, wie.',
+        'Das musst du leider in Langform eintippen, {0}. Probier mal /help.',
+        'Dazu muss ich erst wissen wieviel, {0}. /halp sagt dir, wie es geht.',
+        'Das geht leider nicht ohne Argument, {0}. Schau dir mal /help an.',
+    ],
+    'modify_missing_anonym': [
+        'Sorry {0}, aber da der Default-Timer nicht existiert geht das schlecht. Mach mal /neu, dann geht das.',
+        'Sorry {0}, aber es gibt keinen Default-Timer, also kann ich ihn nicht verändern. Mit /neu kannst du ihn anlegen, mit /help erkläre ich nochmal das Zeit-Format.',
+    ],
+    'plus_anonym': [
+        'Natürlich {2}, Default-Timer um {0} erhöht. Er steht jetzt auf {1}.',
+        'Default-Timer um {0} erhöht, und steht jetzt auf {1}.',
+        'Default-Timer plus {0} ergibt {1}, {2}.',
+        'Mit den neuen {0} sind jetzt {1} im Default-Timer, {2}.',
+        'Plus {0} ergibt {1} im Default-Timer, {2}.',
+        '{2} hat {0} draufgepackt, jetzt sind {1} im Default-Timer.',
+        'Mit den {0} von {2} sind jetzt {1} im Default-Timer.',
+    ],
+    'plus': [
+        'Natürlich {3}, Timer {0} um {1} erhöht. Er steht jetzt auf {2}.',
+        'Timer {0} um {1} erhöht, und steht jetzt auf {2}.',
+        'Timer {0} plus {1} ergibt {2}, {3}.',
+        'Mit den neuen {1} sind jetzt {2} im Timer {0}, {3}.',
+        'Plus {1} ergibt {2} im Timer {0}, {3}.',
+        '{3} hat {1} draufgepackt, jetzt sind {2} im Timer {0}.',
+        'Mit den {1} von {3} sind jetzt {2} im Timer {0}.',
+    ],
+    'modify_invalid_onearg': [
+        'Sorry {1}, aber "{0}" verstehe ich nicht. Schau dir vielleicht nochmal /help an?',
+        'Leider kann ich die Zeit "{0}" nicht verstehen. Schau dir nochmal /help an, oder falls das ein Timer-Name war gib die Zeit noch zusätzlich an.',
+    ],
+    'modify_invalid_twoarg': [
+        'Sorry {1}, ich weiß welchen Timer du meinst, aber "{0}" verstehe ich nicht. Schau dir vielleicht nochmal /help an?',
+        'Leider kann ich die Zeit "{0}" nicht verstehen. Vielleicht hilft die Erklärung in /help?',
+    ],
     'uptime': [
         'Der Bot war hier das erste Mal {0} aktiv. Jetzt ist es {1}.',
     ],

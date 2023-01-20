@@ -99,6 +99,49 @@ class Room:
         else:
             return ('zeige_anonym', format_seconds(value), sender_firstname)
 
+    def modify_by(self, sign, argument, sender_firstname, sender_username):
+        if not argument:
+            return ('modify_noarg', sender_firstname)
+
+        parts = argument.split(" ", 1)
+        if len(parts) > 1:
+            assert len(parts) == 2
+            timer_name = parts[0]
+            old_value = self.timers.get(timer_name, None)
+            if old_value is None:
+                return ('modify_missing', timer_name, sender_firstname)
+            modify_part = parts[1]
+            modify_amount = parse_seconds(modify_part)
+            if modify_amount is None:
+                return ('modify_invalid_twoarg', modify_part, sender_firstname)
+        else:
+            assert len(parts) == 1
+            timer_name = ""
+            old_value = self.timers.get(timer_name, None)
+            # Check old_value for `None` later.
+            modify_part = parts[0]
+            modify_amount = parse_seconds(modify_part)
+            if modify_amount is None:
+                return ('modify_invalid_onearg', modify_part, sender_firstname)
+            if old_value is None:
+                return ('modify_missing_anonym', sender_firstname)
+
+        new_value = max(0, old_value + sign * modify_amount)
+        self.timers[timer_name] = new_value
+
+        modify_amount_str = format_seconds(modify_amount)  # Well-formed, in contrast to the input
+        new_value_str = format_seconds(new_value)
+        if sign > 0:
+            if timer_name:
+                return ('plus', timer_name, modify_amount_str, new_value_str, sender_firstname)
+            else:
+                return ('plus_anonym', modify_amount_str, new_value_str, sender_firstname)
+        else:
+            if timer_name:
+                return ('minus', timer_name, modify_amount_str, new_value_str, sender_firstname)
+            else:
+                return ('minus_anonym', modify_amount_str, new_value_str, sender_firstname)
+
 
 def compute_uptime(room, argument, sender_firstname, sender_username) -> None:
     return ('uptime', room.init_datetime.strftime(DATETIME_FORMAT), datetime.datetime.now().strftime(DATETIME_FORMAT))
@@ -111,5 +154,9 @@ def handle(room, command, argument, sender_firstname, sender_username):
         return room.command_neu(argument, sender_firstname, sender_username)
     elif command == 'zeige':
         return room.command_zeige(argument, sender_firstname, sender_username)
+    elif command == 'plus':
+        return room.modify_by(1, argument, sender_firstname, sender_username)
+    elif command == 'minus':
+        return room.modify_by(-1, argument, sender_firstname, sender_username)
     else:
         return ('unknown_command', sender_firstname)
