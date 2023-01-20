@@ -249,6 +249,19 @@ class TestSequences(unittest.TestCase):
             (('help', '', 'fina', 'usna'), ('help', 'fina')),
         ])
 
+    def test_list(self):
+        self.check_sequence([
+            (("list", "", "fina", "usna"), ("list", "(keine Timer)", "fina")),
+            (("neu", "", "fina", "usna"), ("neu_anonym", "fina")),
+            (("list", "", "fina", "usna"), ("list", "Default-Timer: 0s", "fina")),
+            (("neu", "x", "fina", "usna"), ("neu", "x", "fina")),
+            (("list", "", "fina", "usna"), ("list", "Default-Timer: 0s\nx: 0s", "fina")),
+            (("neu", "y", "fina", "usna"), ("neu", "y", "fina")),
+            (("list", "", "fina", "usna"), ("list", "Default-Timer: 0s\nx: 0s\ny: 0s", "fina")),
+            (("neu", "v", "fina", "usna"), ("neu", "v", "fina")),
+            (("list", "", "fina", "usna"), ("list", "Default-Timer: 0s\nv: 0s\nx: 0s\ny: 0s", "fina")),
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

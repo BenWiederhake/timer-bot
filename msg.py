@@ -92,6 +92,10 @@ MESSAGES = {
     'uptime': [
         'Der Bot war hier das erste Mal {0} aktiv. Jetzt ist es {1}.',
     ],
+    'list': [
+        'Natürlich, {0}. Die Timer stehen bei:\n{1}',
+        'Hey {0}, die Timer stehen im Moment bei:\n{1}',
+    ],
     'unknown_command': [
         'Häh?',
         'Was?',

@@ -142,6 +142,16 @@ class Room:
             else:
                 return ('minus_anonym', modify_amount_str, new_value_str, sender_firstname)
 
+    def command_list(self, argument, sender_firstname, sender_username):
+        entries = list(self.timers.items())
+        if not entries:
+            return ('list', '(keine Timer)', sender_firstname)
+
+        entries.sort()
+        default_name = 'Default-Timer'
+        parts = [f"{name if name else default_name}: {format_seconds(secs)}" for name, secs in entries]
+        return ("list", "\n".join(parts), sender_firstname)
+
 
 def compute_uptime(room, argument, sender_firstname, sender_username) -> None:
     return ('uptime', room.init_datetime.strftime(DATETIME_FORMAT), datetime.datetime.now().strftime(DATETIME_FORMAT))
@@ -154,6 +164,8 @@ def handle(room, command, argument, sender_firstname, sender_username):
         return room.command_neu(argument, sender_firstname, sender_username)
     elif command == 'zeige':
         return room.command_zeige(argument, sender_firstname, sender_username)
+    elif command == 'list':
+        return room.command_list(argument, sender_firstname, sender_username)
     elif command == 'plus':
         return room.modify_by(1, argument, sender_firstname, sender_username)
     elif command == 'minus':
