@@ -82,7 +82,7 @@ MESSAGES = {
         'Wenn ich mal groß und stark bin kann ich das auch!',
         '🥺',
     ],
-    'debug1': [
-        '{0}',
+    'help': [
+        'Gerne doch, {0}! Zeit-formate gibst du an als "1d" für einen Tag (day), "2h" für zwei Stunden, "3m" oder "3min" für drei Minuten. Und das kann man zusammengeschrieben. Also würde "1d2h3m" bedeuted: Ein Tag, zwei Stunden, und drei Minuten.',
     ],
 }

@@ -158,5 +158,7 @@ def handle(room, command, argument, sender_firstname, sender_username):
         return room.modify_by(1, argument, sender_firstname, sender_username)
     elif command == 'minus':
         return room.modify_by(-1, argument, sender_firstname, sender_username)
+    elif command == 'help':
+        return ('help', sender_firstname)
     else:
         return ('unknown_command', sender_firstname)

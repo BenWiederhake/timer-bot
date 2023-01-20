@@ -74,9 +74,20 @@ class TestFormatSeconds(unittest.TestCase):
 
 
 class TestSequences(unittest.TestCase):
+    SKIP_MESSAGES = {"uptime"}
+    SEEN_MESSAGES = set()
+
+    @classmethod
+    def tearDownClass(_cls):
+        expected_keys = set(msg.MESSAGES.keys())
+        extraneous_keys = expected_keys.difference(TestSequences.SEEN_MESSAGES)
+        extraneous_keys.difference_update(TestSequences.SKIP_MESSAGES)
+        assert not extraneous_keys, extraneous_keys
+
     def check_sequence(self, sequence):
         room = logic.Room()
         for i, (query, expected_response) in enumerate(sequence):
+            TestSequences.SEEN_MESSAGES.add(expected_response[0])
             with self.subTest(step=i):
                 actual_response = logic.handle(room, *query)
                 self.assertEqual(expected_response, actual_response, query)
@@ -167,6 +178,11 @@ class TestSequences(unittest.TestCase):
             (('plus', 'y', 'fina', 'usna'), ('modify_invalid_onearg', 'y', 'fina')),
             (('plus', '1h', 'fina', 'usna'), ('plus_anonym', '1h 0min', '1h 0min', 'fina')),
             (('plus', '1h1h', 'fina', 'usna'), ('modify_invalid_onearg', '1h1h', 'fina')),
+        ])
+
+    def test_help(self):
+        self.check_sequence([
+            (('help', '', 'fina', 'usna'), ('help', 'fina')),
         ])
 
 
